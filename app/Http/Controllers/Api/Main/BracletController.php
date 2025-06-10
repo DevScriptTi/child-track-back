@@ -12,7 +12,7 @@ class BracletController extends Controller
     public function index()
     {
         return response()->json([
-            Braclet::with(['children','location','circle'])->paginate(10)
+            Braclet::with(['children','location','circle'])->paginate(4)
         ]);
     }
 
