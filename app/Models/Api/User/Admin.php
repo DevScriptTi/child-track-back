@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Admin extends Model
 {
-    protected $fillable = ['username'];
+    protected $fillable = ['username','name','last'];
 
     public function key(){
         return $this->morphOne(Key::class, 'keyable');

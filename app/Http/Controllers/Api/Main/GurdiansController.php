@@ -13,13 +13,15 @@ class GurdiansController extends Controller
 {
     public function index()
     {
-        $gurdians = Gurdian::with(['phones' ,'baladya.wilaya' ,'key.user' ])->paginate(10);
+        $gurdians = Gurdian::with(['phones', 'baladya.wilaya', 'key.user'])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
         return response()->json($gurdians);
     }
 
     public function show(Gurdian $gurdian)
     {
-        return response()->json($gurdian->fresh(['phones' ,'baladya.wilaya' ,'key.user']));
+        return response()->json($gurdian->fresh(['phones', 'baladya.wilaya', 'key.user']));
     }
 
     public function store(Request $request)
@@ -30,7 +32,7 @@ class GurdiansController extends Controller
         return response()->json($gurdian, 201);
     }
 
-    public function storePhone(Request $request , Gurdian $gurdian)
+    public function storePhone(Request $request, Gurdian $gurdian)
     {
         $phone = $gurdian->phones()->create($request->all());
         return response()->json($phone, 201);
@@ -43,23 +45,27 @@ class GurdiansController extends Controller
         return response()->json($gurdian);
     }
 
-    public function updatePhone(Request $request, Gurdian $gurdian , Phone $phone)
+    public function updatePhone(Request $request, Gurdian $gurdian, Phone $phone)
     {
         $phone->update($request->all());
         return response()->json($phone);
     }
 
-    public function destroy(Gurdian $gurdian)
+    public function createKey($gurdian)
     {
+        $gurdian =  Gurdian::findOrFail($gurdian);
+        $key = Str::random(10);
+        $gurdian->key()->create(['value' => $key]);
+        return response()->json(['api_key' => $key]);
+    }
+
+    public function destroy($gurdian)
+    {
+        $gurdian = Gurdian::findOrFail($gurdian);
         $gurdian->phones()->delete();
         $gurdian->delete();
         return response()->json(['message' => 'Gurdian deleted successfully']);
     }
 
-    public function createKey(Gurdian $gurdian)
-    {
-        $key = Str::random(32);
-        $gurdian->key()->create(['value' => $key]);
-        return response()->json(['api_key' => $key]);
-    }
+
 }

@@ -48,6 +48,10 @@ class Children extends Model
         return $this->hasOne(Braclet::class);
     }
 
+    public function location(){
+        return $this->morphOne(Location::class, 'locationable');
+    }
+
     public function getRouteKeyName()
     {
         return 'username';

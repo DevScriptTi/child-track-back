@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('baladya_id')->nullable()->constrained('baladyas')->nullOnDelete();
         });
         Schema::table('braclets', function (Blueprint $table) {
-            $table->foreignId('children_id')->constrained('childrens')->onDelete('cascade');
+            $table->foreignId('children_id')->nullable()->constrained('childrens')->nullOnDelete();
         });
 
         Schema::table('baladyas', function (Blueprint $table) {

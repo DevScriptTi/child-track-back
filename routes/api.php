@@ -23,6 +23,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::match(['patch', 'put'], '/gurdians/{gurdian}/phones/{phone}', [GurdiansController::class, 'updatePhone']);
     Route::apiResource('/childrens', ChildrenController::class);
     Route::apiResource('/braclets', BracletController::class);
+    Route::post('/braclets/{id}/children', [BracletController::class, 'linkChild']);
 });
 
 Route::apiResource('/gurdians', GurdiansController::class)->only('store');

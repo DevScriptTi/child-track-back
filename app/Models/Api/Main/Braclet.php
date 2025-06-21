@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Braclet extends Model
 {
-    protected $fillable = ['mac', 'status'];
+    protected $fillable = ['mac', 'status' ,'children_id'];
     public function children(){
         return $this->belongsTo(Children::class);
     }
@@ -15,6 +15,6 @@ class Braclet extends Model
     }
 
     public function circle(){
-        return $this->hasMany(Circle::class);
+        return $this->hasOne(Circle::class);
     }
 }
