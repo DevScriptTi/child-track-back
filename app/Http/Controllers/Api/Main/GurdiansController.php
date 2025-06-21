@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Api\Extra\Phone;
 use Illuminate\Http\Request;
 use App\Models\Api\User\Gurdian;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 
@@ -19,9 +20,12 @@ class GurdiansController extends Controller
         return response()->json($gurdians);
     }
 
-    public function show(Gurdian $gurdian)
+    public function show($gurdian)
     {
-        return response()->json($gurdian->fresh(['phones', 'baladya.wilaya', 'key.user']));
+        $gurdian_ = Gurdian::where('id',$gurdian)->with(['phones', 'baladya.wilaya', 'key.user'])->first();
+        return response()->json([
+            'guardian' => $gurdian_
+        ]);
     }
 
     public function store(Request $request)
@@ -41,6 +45,7 @@ class GurdiansController extends Controller
 
     public function update(Request $request, Gurdian $gurdian)
     {
+        Log::info("guardian name" .$gurdian->name);
         $gurdian->update($request->all());
         return response()->json($gurdian);
     }
