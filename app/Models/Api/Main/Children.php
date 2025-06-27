@@ -4,6 +4,7 @@ namespace App\Models\Api\Main;
 
 use App\Models\Api\Extra\Baladya;
 use App\Models\Api\User\Gurdian;
+use App\Models\danger;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\Log;
 
 class Children extends Model
 {
-    protected $fillable = ['username', 'name', 'last' ,'date_of_birth' , 'description' ,'baladya_id' ,'gurdian_id' ];
+    protected $fillable = ['username', 'name', 'last', 'date_of_birth', 'description', 'baladya_id', 'gurdian_id'];
 
     protected static function booted()
     {
@@ -26,7 +27,7 @@ class Children extends Model
         static::creating(function ($child) {
             $user = User::find(Auth::id());
             if (Auth::check() && $user->key->keyable_type === 'gurdian') {
-               $child->gurdian_id = $user->key->keyable_id;
+                $child->gurdian_id = $user->key->keyable_id;
             }
         });
         static::updating(function ($child) {
@@ -37,18 +38,24 @@ class Children extends Model
         });
     }
 
-    public function gurdian(){
+    public function gurdian()
+    {
         return $this->belongsTo(Gurdian::class);
     }
-    public function baladya(){
+    public function baladya()
+    {
         return $this->belongsTo(Baladya::class);
     }
 
-    public function braclet(){
+    public function braclet()
+    {
         return $this->hasOne(Braclet::class);
     }
 
-    public function location(){
+   
+
+    public function location()
+    {
         return $this->morphOne(Location::class, 'locationable');
     }
 

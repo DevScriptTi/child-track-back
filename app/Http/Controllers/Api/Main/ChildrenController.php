@@ -10,13 +10,10 @@ use Illuminate\Support\Str;
 
 class ChildrenController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return response()->json(
-            Children::with(['gurdian', 'braclet' => ['location', 'circle.location'], 'baladya.wilaya'])->paginate(20)
+            Children::with(['gurdian', 'braclet' => ['location','dangers' => ['location'], 'circle.location'], 'baladya.wilaya'])->paginate(20)
         );
     }
 
@@ -38,23 +35,17 @@ class ChildrenController extends Controller
         $child = Children::create($validate);
         return response()->json([
             'message' => 'Children created successfully',
-            'data' => $child->load(['gurdian', 'braclet' => ['location', 'circle.location'], 'baladya.wilaya'])
+            'data' => $child->load(['gurdian', 'braclet' => ['location','dangers' => ['location'], 'circle.location'], 'baladya.wilaya'])
         ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Children $children)
     {
         return response()->json(
-            $children->load(['braclet' => ['location', 'circle.location'], 'baladya.wilaya'])
+            $children->load(['braclet' => ['location','dangers' => ['location'], 'circle.location'], 'baladya.wilaya'])
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Children $children)
     {
         $validate = $request->validate([
@@ -73,9 +64,6 @@ class ChildrenController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Children $children)
     {
         $children->delete();

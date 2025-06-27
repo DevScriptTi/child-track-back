@@ -24,6 +24,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::apiResource('/childrens', ChildrenController::class);
     Route::apiResource('/braclets', BracletController::class);
     Route::post('/braclets/{id}/children', [BracletController::class, 'linkChild']);
+    Route::post('/braclets/{braclet}/danger', [BracletController::class, 'danger']);
+    Route::post('/braclets/{circle}/circleUpdate', [BracletController::class, 'circleLocation']);
 });
 
 Route::apiResource('/gurdians', GurdiansController::class)->only('store');

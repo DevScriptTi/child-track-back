@@ -6,6 +6,7 @@ use App\Models\Api\Main\Braclet;
 use App\Models\Api\Main\Circle;
 use App\Models\Api\User\Admin;
 use App\Models\Api\User\Gurdian;
+use App\Models\Danger;
 use App\Models\User;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -35,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
             'gurdian' => Gurdian::class,
             'user' => User::class ,
             'braclet' => Braclet::class,
+            'danger' => Danger::class,
             'circle' => Circle::class
         ]);
 
